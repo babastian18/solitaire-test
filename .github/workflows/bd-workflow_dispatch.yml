@@ -22,7 +22,7 @@ jobs:
       run: git tag ${{ github.event.inputs.tag_name }} && git push origin ${{ github.event.inputs.tag_name }}
 
     - name: Login to DockerHub
-      run: docker login -u $DOCKER_USERNAME --password $DOCKERHUB_TOKEN
+      run: echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
 
     - name: Build and Push Docker image
       run: |
