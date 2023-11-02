@@ -23,7 +23,7 @@ jobs:
 
     - name: Docker login
       uses: docker/login-action@v2
-      env:
+      with:
         username: ${{ env.DOCKERHUB_USERNAME }}
         password: ${{ env.DOCKERHUB_TOKEN }}
         
