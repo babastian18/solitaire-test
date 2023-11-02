@@ -29,7 +29,7 @@ jobs:
         
     - name: Build and push
       run: 
-        docker build -t testing/welcome:latest -t testing/welcome:${{ github.event.inputs.tag_name }} . &&
-        docker push testing/welcome:latest &&
-        docker push testing/welcome:${{ github.event.inputs.tag_name }}
+        docker build -t 21052002/solitaire-test:latest -t 21052002/solitaire-test:${{ github.event.inputs.tag_name }} . &&
+        docker push 21052002/solitaire-test:latest &&
+        docker push 21052002/solitaire-test:${{ github.event.inputs.tag_name }}
 
