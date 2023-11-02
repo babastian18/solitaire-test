@@ -21,11 +21,13 @@ jobs:
     - name: Create Release Tag
       run: git tag ${{ github.event.inputs.tag_name }} && git push origin ${{ github.event.inputs.tag_name }}
 
-    - name: Login to DockerHub
-      run: echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
-
     - name: Build and Push Docker image
-      run: |
+      env:
+        DOCKERHUB_USERNAME: ${{ env.DOCKERHUB_USERNAME }}
+        DOCKERHUB_USERNAME: ${{ env.DOCKERHUB_TOKEN }}
+      run: 
         docker build -t testing/welcome:latest -t testing/welcome:${{ github.event.inputs.tag_name }} .
+        echo $DOCKERHUB_TOKEN | docker login -u $DOCKER_USERNAME --password-stdin
         docker push testing/welcome:latest
         docker push testing/welcome:${{ github.event.inputs.tag_name }}
+
