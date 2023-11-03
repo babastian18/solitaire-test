@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: solitaire-test-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: solitaire-test
+  template:
+    metadata:
+      labels:
+        app: solitaire-test
+    spec:
+      containers:
+      - name: solitaire-test
+        image: 21052002/solitaire-test:latest
+        ports:
+        - containerPort: 8000
+      imagePullSecrets:
+      - name: regcred
