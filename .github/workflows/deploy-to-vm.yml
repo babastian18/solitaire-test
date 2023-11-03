@@ -1,0 +1,31 @@
+name: Deploy to VM
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_vm_address:
+        description: 'Target VM Address'
+        required: true
+      target_vm_username:
+        description: 'Target VM Username'
+        required: true
+      path_to_private_key:
+        description: 'Path to Private Key'
+        required: true
+      path_to_deploy_script:
+        description: 'Path to Deploy Script'
+        required: true
+
+jobs:
+  deploy-to-vm:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to VM
+        env:
+          TARGET_VM_ADDRESS: ${{ github.event.inputs.target_vm_address }}
+          TARGET_VM_USERNAME: ${{ github.event.inputs.target_vm_username }}
+          PATH_TO_PRIVATE_KEY: ${{ github.event.inputs.path_to_private_key }}
+          PATH_TO_DEPLOY_SCRIPT: ${{ github.event.inputs.path_to_deploy_script }}
+        run: |
+          ssh -i $PATH_TO_PRIVATE_KEY $TARGET_VM_USERNAME@$TARGET_VM_ADDRESS 'bash -s' < $PATH_TO_DEPLOY_SCRIPT
