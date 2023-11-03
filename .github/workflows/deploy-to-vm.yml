@@ -1,9 +1,15 @@
+## semua hanya fake script tanpa private key sebenarnya dan target vm menyesuaikan
 name: Deploy to VM
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
+    inputs:
+      target_vm_address:
+        description: 'Target VM Address'
+        required: true
+      target_vm_username:
+        description: 'Target VM Username'
+        required: true
 
 jobs:
   deploy-to-vm:
@@ -12,12 +18,9 @@ jobs:
     steps:
       - name: Deploy to VM
         env:
-          TARGET_VM_ADDRESS: your_vm_address
-          TARGET_VM_USERNAME: your_vm_username
+          TARGET_VM_ADDRESS: ${{ github.event.inputs.target_vm_address }}
+          TARGET_VM_USERNAME: ${{ github.event.inputs.target_vm_username }}
         run: |
           echo "$PRIVATE_KEY" > key.pem
           chmod 600 key.pem
           ssh -i key.pem $TARGET_VM_USERNAME@$TARGET_VM_ADDRESS 'bash -s' < script/deploy.sh
-
-
-## semuanya hanyak fake script tanpa id_rsa sebenarnya, begitu juga dengan vm address menyesuaikan dengan target VM
